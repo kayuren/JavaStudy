@@ -2,6 +2,7 @@
 
 ## 첫번째 서블릿 작성
 {:toc}
+
 실습을 위한 메이븐을 주입  
 ```java
 <dependency>
@@ -14,6 +15,7 @@
 
 ### 서블릿 클래스 작성
 {:toc}
+
 * 자바EE에서 `서블릿은 최종 사용자로부터 요청을 수신하고 응답하는 역활`을 하며, 자바 EE API사이트에서는 다음과 같이 정의하고 있다.
 * - 서블릿은 작은 자바프로그램이며, 일반적으로 HTTP를 통해 웹 클라이언트로부터 요청을 수신하고 이에 응답한다.
 * 서블릿은 모든 웹 애플리케이션의 핵심 클래스이며 `요청을 수신`하고 `작업을 수행`하거나 애플리케이션의 `다른부분으로 위임`할 수 있는 유일한 클래스이다.
@@ -23,10 +25,12 @@
 
 ##### 서블릿이 확장하는 대상
 {:toc}
+
 * 서블릿은 대부분 javax.servlet.GenericServlet을 상속하며 GenericServlet은 프로토콜에 독립적인 서블릿이다.
 * HttpServlet은 다양한 형식의 HTTP요청을 선택적으로 수신하고 응답하는 데 필요한 모든 도구를 제공한다.
 * 메서드가 javax.servlet.htpp.HttpServletRequest alc HttpServletResponse형식의 인자를 받으므로 서블릿이 서비스하는 요청의 HTTP전용 속성에 쉽게 접근할 수 있다.
 * javax.servlet.htpp.HttpServlet은 HTTP전용 요청에 응답하기 위해 GenericServlet을 확장하여 HTTP요청만 수신하는 service메서드를 구현하며 아래의 방식에 해당하는 메서드의 비어있는 구현을 제공한다.  
+
 |메서드|서블릿 메서드|용도|
 |:---|:---|:---|
 |GET|doGet()|지정된 URP의 자원 검색|
@@ -39,6 +43,7 @@
 
 ##### 서블릿이 응답하는 HTTP 방식 제어
 {:toc}
+
 ```java
 import javax.servlet.http.HttpServlet;
 
@@ -98,6 +103,7 @@ public void destroy() {
 
 ##### 설명자에 서블릿 추가
 {:toc}
+
 배포 설명자는 애플리케이션과 함께 배포할 리스너, 서블릿, 필터와 이를 위해 애플리케이션이 사용할 설정을 정의한다.  
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
@@ -192,6 +198,7 @@ public void destroy() {
 
 ##### 서블릿 실행 및 디버깅
 {:toc}
+
 * 애플리케이션을 저장하고 컴파일을 하면 실행구성이 정확하게 설정되었는지 확인해야 한다.
 * 디버그 모드로 실행을 하고 중단점을 찍어서 확인한다.
 
@@ -200,16 +207,19 @@ public void destroy() {
 
 ##### 서비스 메서드 실행중 수행해야 하는 작업
 {:toc}
+
 * servlet클래스의 `service메서드`는 모든 들어오는 `요청에 대한 서비스를 제공하는 역활`을 한다.
 * 궁극적으로는 사용되는 프로토콜을 바탕으로 들어오는 요청의 데이터구문을 분석 및 처리하고 프로토콜에 적합한 응답을 클라이언트로 전송해야 한다. service메서드가 응답데이터를 소켓에 전달하지 않고 반환하면 클라이언트 에서는 "연결 재설정"과 같은 네트워크 오류가 발생할 가능성이 높은데, `HttpServlet을 확장하면 이러한 세부 작업을 직접 처리할 필요가 없다는 장점`을 가지고 있다.
 
 ##### HttpServletRequest 사용
 {:toc}
+
 * HttpServletRequest인터페이스는 수신한 요청에 대한 추가적인 HTTP프로토콜 전용정보를 제공하는 ServletRequest의 확장 인터페이스이다.
 * HttpServletRequest의 가장 중요한 기능은 `클라이언트가 전송한 요청 매개변수를 얻는 기능`이다. 요청매개변수는 쿼리매개변수또는 application/x-www-form-urlencoded, multipart/form-data로 인코딩된 요청본문(post변수)으로 전달된다.
 
 ##### Request의 주요메서드 기능
 {:toc}
+
 |메서드|기능|
 |:---|:---|
 |getParameter|매개변수의 단일값을 반환하며, 매개변수에 여러개의 값이 포함된경우 첫번째 값을 반환한다.|
@@ -218,7 +228,8 @@ public void destroy() {
 |getParameterNames|사용가능한 모든 매개변수의 이름을 열거형으로 반환한다.|
 
 ##### 요청 컨텐츠에 대한 정보 확인
-{:toc}
+{:toc}  
+
 |메서드|기능|
 |:---|:---|
 |getContentType|요청의 MIME콘텐츠 형식을 반환한다.|
@@ -227,7 +238,8 @@ public void destroy() {
 |getReader, getInputStream|컨텐츠가 문자 인코딩 데이터일경우 Reader를, 이진 데이터일경우 InputStream을 사용하며 동일 요청에 대하여 두 메서드를 모두 사용할 수는 없다.|
 
 ##### URL, URI, 헤더와 같은 요청정보 받기.
-{:toc}
+{:toc}  
+
 |메서드|기능|
 |:---|:---|
 |getRequestURL|클라이언트가 요청하는데 사용한 전체 URL을 반환한다.|
@@ -237,19 +249,23 @@ public void destroy() {
 |getHeaderNames|요청한 모든 헤더 이름을 열거형으로 반환한다.|
 
 ### HttpServletResponse사용
-{:toc}
+{:toc}  
+
 ServletResponse를 확장한 인터페이스로 `응답에 HTTP프로토콜 관련 프로퍼티에 접근`할 수 있도록 한다.
 
 ##### 응답본문에 컨텐츠 기록
-{:toc}
+{:toc}  
+
 * 응답본문에 컨텐츠를 기록하는 방법은 javax.servlet.SetvletOutputStream을 반환하는 getOutputStream()과java.io.PrintWriter를 반환하는 getWriter()메서드를 이용하여 기록한다.
 * Request와 마찬가지로 HTML또는 다른 문자 인코딩된 텍스트를 클라이언트에 반환할경우 getWriter를 사용하는게 좋으며, 바이너리 데이터를 전송할 경우 getOutputStream를 이용해 응답 바이트를 전송하는 것이 좋다. 단, 동일한 응답에 두개의 메서드를 동시에 사용할 경우 오류가 발생한다.
 * 응답본문에 기록하는 동안 인코딩이나 컨텐츠 형식을 지정해야 하는경우 setContentType() 과 setCharacterEncoding()을 사용할 수 있고 해당 메서드가 여러번에 걸쳐 중복 사용 되었을경우 마지막에 사용된 인코딩 및 컨텐츠 형식으로 지정된다. 또한 getWriter와 함께 사용하는 경우 getWriter의 사용시점보다 이전에 컨텐츠타입과 인코딩이 지정되야 올바른 문자 인코딩을 하도록 구성된다.
 
 ##### 헤더 및 다른 응답 프로퍼티 설정
-{:toc}
+{:toc}  
+
 * Response는 Request에 있는 메서드와 비슷하게 헤더 및 다른 응답 프로퍼티를 재 설정 할 수 있다.
 * 설정하려는 헤더와 같은 이름의 헤더가 이미 기존의 응답헤더에 있는경우 해당 해더값이 재 정의된다.  
+
 |메서드|기능|
 |:---|:---|
 |setHeader|헤더값 설정|
@@ -262,6 +278,7 @@ ServletResponse를 확장한 인터페이스로 `응답에 HTTP프로토콜 관�
 
 ##### 매개변수 사용 및 폼 제출 처리
 {:toc}
+
 ```java
 @WebServlet (
 		name = "HelloServlet",
